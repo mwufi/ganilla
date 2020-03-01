@@ -1,5 +1,6 @@
 import torch
 import itertools
+import wandb
 from util.image_pool import ImagePool
 from .base_model import BaseModel
 from . import networks
@@ -72,6 +73,12 @@ class CycleGANModel(BaseModel):
             self.optimizers = []
             self.optimizers.append(self.optimizer_G)
             self.optimizers.append(self.optimizer_D)
+
+    def watch(self):
+        wandb.watch(self.netG_A, log='all')
+        wandb.watch(self.netG_B, log='all')
+        wandb.watch(self.netD_A, log='all')
+        wandb.watch(self.netB_A, log='all')
 
     def set_input(self, input):
         AtoB = self.opt.direction == 'AtoB'

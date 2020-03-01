@@ -13,6 +13,9 @@ class BaseModel():
     def modify_commandline_options(parser, is_train):
         return parser
 
+    def watch(self):
+        pass
+
     def name(self):
         return 'BaseModel'
 

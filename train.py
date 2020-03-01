@@ -19,7 +19,7 @@ if __name__ == '__main__':
 
     model = create_model(opt)
     model.setup(opt)
-    wandb.watch(model, log='all')
+    model.watch()
 
     visualizer = Visualizer(opt)
     total_steps = 0
