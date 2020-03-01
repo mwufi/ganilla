@@ -6,7 +6,7 @@ import shutil
 with open("../datasets/cityscapes-cycle/f_names.txt") as f:
     f_names = f.read().split('\n')
 
-result_dir = "/home/retina/Research/samhi/CycleGAN/results/cityscapes_label2photo_pretrained_docker/latest_test/images/"
+result_dir = "/tmp/images"
 img_names = os.listdir(result_dir)
 
 for img_name in img_names:
