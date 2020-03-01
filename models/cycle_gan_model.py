@@ -78,7 +78,7 @@ class CycleGANModel(BaseModel):
         wandb.watch(self.netG_A, log='all')
         wandb.watch(self.netG_B, log='all')
         wandb.watch(self.netD_A, log='all')
-        wandb.watch(self.netB_A, log='all')
+        wandb.watch(self.netD_B, log='all')
 
     def set_input(self, input):
         AtoB = self.opt.direction == 'AtoB'
