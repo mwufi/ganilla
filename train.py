@@ -1,11 +1,17 @@
 import time
+import wandb
+
 from options.train_options import TrainOptions
 from data import CreateDataLoader
 from models import create_model
 from util.visualizer import Visualizer
 
+wandb.init(project="dfdf")
+
 if __name__ == '__main__':
     opt = TrainOptions().parse()
+    wandb.config.update(opt)
+
     data_loader = CreateDataLoader(opt)
     dataset = data_loader.load_data()
     dataset_size = len(data_loader)
@@ -13,9 +19,10 @@ if __name__ == '__main__':
 
     model = create_model(opt)
     model.setup(opt)
+    wandb.watch(model, log='all')
+
     visualizer = Visualizer(opt)
     total_steps = 0
-
     for epoch in range(opt.epoch_count, opt.niter + opt.niter_decay + 1):
         epoch_start_time = time.time()
         iter_data_time = time.time()
@@ -48,6 +55,7 @@ if __name__ == '__main__':
                 model.save_networks('latest')
 
             iter_data_time = time.time()
+
         if epoch % opt.save_epoch_freq == 0:
             print('saving the model at the end of epoch %d, iters %d' %
                   (epoch, total_steps))

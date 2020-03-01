@@ -6,6 +6,7 @@ import time
 from . import util
 from . import html
 from scipy.misc import imresize
+import wandb
 
 if sys.version_info[0] == 2:
     VisdomExceptionBase = Exception
@@ -173,6 +174,13 @@ class Visualizer():
 
     # losses: same format as |losses| of plot_current_losses
     def print_current_losses(self, epoch, i, losses, t, t_data):
+        wandb.log({
+            'epoch': epoch,
+            'iter': i,
+            't': t,
+            't_data': t_data,
+            **losses
+        })
         message = '(epoch: %d, iters: %d, time: %.3f, data: %.3f) ' % (epoch, i, t, t_data)
         for k, v in losses.items():
             message += '%s: %.3f ' % (k, v)

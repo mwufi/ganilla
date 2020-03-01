@@ -1,5 +1,6 @@
 import os
 import torch
+import wandb
 from collections import OrderedDict
 from . import networks
 
@@ -100,6 +101,9 @@ class BaseModel():
                     net.cuda(self.gpu_ids[0])
                 else:
                     torch.save(net.cpu().state_dict(), save_path)
+
+                # Also save to wandb
+                wandb.save(save_path)
 
     def __patch_instance_norm_state_dict(self, state_dict, module, keys, i=0):
         key = keys[i]
